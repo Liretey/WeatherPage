@@ -5,11 +5,21 @@ type Props = {
   day: string;
   tempMin: number;
   tempMax: number;
+  isSelected: boolean;
+  onClick: () => void;
 };
 
-export function WeatherCard({ day, tempMin, tempMax }: Props) {
+export function WeatherCard({
+  day,
+  tempMin,
+  tempMax,
+  isSelected,
+  onClick,
+}: Props) {
+  const Card = createCard(isSelected);
+
   return (
-    <Card>
+    <Card onClick={onClick}>
       <Day>{day}</Day>
       <CloudIcon />
       <TempMax>{tempMax}°</TempMax>
@@ -18,14 +28,22 @@ export function WeatherCard({ day, tempMin, tempMax }: Props) {
   );
 }
 
-const Card = styled.div`
+const createCard = highlight => styled.div`
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 10px;
   max-width: 4.7rem;
-  border: 1px solid ${p => p.theme.border};
+  border: 1px solid ${p => p.theme.backgroundHighlight};
+  border-top: 1px solid
+    ${p => (highlight ? p.theme.primary : p.theme.backgroundHighlight)};
+  background-color: ${p => highlight && p.theme.backgroundHighlight};
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${p => p.theme.backgroundHighlight};
+  }
 `;
 
 const Day = styled.div`
