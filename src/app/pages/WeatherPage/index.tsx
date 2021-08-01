@@ -4,8 +4,20 @@ import { NavBar } from 'app/components/NavBar';
 import { PageWrapper } from 'app/components/PageWrapper';
 import { WeatherCard } from './components/WeatherCard';
 import { WeatherContainer } from './components/WeatherContainer';
+import { useState } from 'react';
+
+const days = [
+  { day: 'Mon', tempMin: 27, tempMax: 33 },
+  { day: 'Tue', tempMin: 27, tempMax: 33 },
+  { day: 'Wed', tempMin: 27, tempMax: 33 },
+  { day: 'Thu', tempMin: 27, tempMax: 33 },
+  { day: 'Fri', tempMin: 27, tempMax: 33 },
+  { day: 'Sat', tempMin: 27, tempMax: 33 },
+  { day: 'Sun', tempMin: 27, tempMax: 33 },
+];
 
 export function WeatherPage() {
+  const [selectedDay, setSelectedDay] = useState(0);
   return (
     <>
       <Helmet>
@@ -18,13 +30,14 @@ export function WeatherPage() {
       <NavBar />
       <PageWrapper>
         <WeatherContainer>
-          <WeatherCard day="Mon" tempMin={27} tempMax={33} />
-          <WeatherCard day="Tue" tempMin={27} tempMax={33} />
-          <WeatherCard day="Wed" tempMin={27} tempMax={33} />
-          <WeatherCard day="Thu" tempMin={27} tempMax={33} />
-          <WeatherCard day="Fri" tempMin={27} tempMax={33} />
-          <WeatherCard day="Sat" tempMin={27} tempMax={33} />
-          <WeatherCard day="Sun" tempMin={27} tempMax={33} />
+          {days.map((day, i) => (
+            <WeatherCard
+              key={i}
+              {...day}
+              onClick={() => setSelectedDay(i)}
+              isSelected={selectedDay === i}
+            />
+          ))}
         </WeatherContainer>
       </PageWrapper>
     </>
