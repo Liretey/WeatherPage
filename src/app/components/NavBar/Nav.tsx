@@ -1,11 +1,22 @@
 import * as React from 'react';
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 import { ReactComponent as DocumentationIcon } from './assets/documentation-icon.svg';
 import { ReactComponent as GithubIcon } from './assets/github-icon.svg';
+import { WiDayCloudy } from 'react-icons/wi';
+import { AiFillHome } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
 export function Nav() {
   return (
     <Wrapper>
+      <NavLink to="/">
+        <AiFillHome className="icon" />
+        Home
+      </NavLink>
+      <NavLink to="/weather">
+        <WiDayCloudy className="icon" />
+        WeatherPage
+      </NavLink>
       <Item
         href="https://cansahin.gitbook.io/react-boilerplate-cra-template/"
         target="_blank"
@@ -31,9 +42,14 @@ export function Nav() {
 const Wrapper = styled.nav`
   display: flex;
   margin-right: -1rem;
+
+  .icon {
+    margin-right: 0.25rem;
+    height: 1.5rem;
+  }
 `;
 
-const Item = styled.a`
+const linkStyles = css`
   color: ${p => p.theme.primary};
   cursor: pointer;
   text-decoration: none;
@@ -50,8 +66,12 @@ const Item = styled.a`
   &:active {
     opacity: 0.4;
   }
+`;
 
-  .icon {
-    margin-right: 0.25rem;
-  }
+const Item = styled.a`
+  ${linkStyles}
+`;
+
+const NavLink = styled(Link)`
+  ${linkStyles}
 `;
