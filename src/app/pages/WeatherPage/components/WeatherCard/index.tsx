@@ -1,5 +1,5 @@
-import styled from 'styled-components/macro';
 import { ReactComponent as CloudIcon } from './assets/cloud.svg';
+import styled, { css } from 'styled-components/macro';
 
 type Props = {
   day: string;
@@ -16,10 +16,8 @@ export function WeatherCard({
   isSelected,
   onClick,
 }: Props) {
-  const Card = createCard(isSelected);
-
   return (
-    <Card onClick={onClick}>
+    <Card onClick={onClick} className={isSelected ? 'highlight' : ''}>
       <Day>{day}</Day>
       <CloudIcon />
       <TempMax>{tempMax}°</TempMax>
@@ -28,7 +26,7 @@ export function WeatherCard({
   );
 }
 
-const createCard = highlight => styled.div`
+const Card = styled.div`
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
@@ -36,9 +34,6 @@ const createCard = highlight => styled.div`
   padding: 10px;
   max-width: 4.7rem;
   border: 1px solid ${p => p.theme.backgroundHighlight};
-  border-top: 1px solid
-    ${p => (highlight ? p.theme.primary : p.theme.backgroundHighlight)};
-  background-color: ${p => highlight && p.theme.backgroundHighlight};
   cursor: pointer;
 
   &:hover {
@@ -46,9 +41,13 @@ const createCard = highlight => styled.div`
   }
 `;
 
-const Day = styled.div`
+const sharedStyles = css`
   font-size: 0.875rem;
   color: ${p => p.theme.text};
+`;
+
+const Day = styled.div`
+  ${sharedStyles}
 `;
 
 const TempMax = styled.div`
@@ -58,6 +57,5 @@ const TempMax = styled.div`
 `;
 
 const TempMin = styled.div`
-  font-size: 0.875rem;
-  color: ${p => p.theme.text};
+  ${sharedStyles}
 `;
